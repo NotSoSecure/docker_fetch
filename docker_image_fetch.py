@@ -1,25 +1,24 @@
-import requests
-import json
 import os
+import json
+import optparse
+import requests
 
 # pulls Docker Images from unauthenticated docker registry api. 
 # and checks for docker misconfigurations. 
 
+apiversion = "v2"
+final_list_of_blobs = []
+
+
+# Disable insecure request warning
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-
-import optparse
 parser = optparse.OptionParser()
 parser.add_option('-u', '--url', action="store", dest="url", help="URL Endpoint for Docker Registry API v2. Eg https://IP:Port", default="spam")
-
-
 options, args = parser.parse_args()
 url = options.url
-apiversion = "v2"
 
-
-final_list_of_blobs = []
 
 
 def list_repos():
