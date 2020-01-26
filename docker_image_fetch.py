@@ -27,7 +27,7 @@ def list_repos():
 
 def find_tags(reponame):
 	req = requests.get(url+ "/" + apiversion + "/" + reponame+"/tags/list", verify=False)
-	print "\n"
+	print("\n")
 	data =  json.loads(req.content)
 	if "tags" in data:
 		return data["tags"]
@@ -51,35 +51,35 @@ def download_blobs(reponame, blobdigest,dirname):
 def main(): 
 	if url is not "spam":
 		list_of_repos = list_repos()
-		print "\n[+] List of Repositories:\n"
+		print("\n[+] List of Repositories:\n")
 		for x in list_of_repos:
-			print x
-		target_repo = raw_input("\nWhich repo would you like to download?:  ")
+			print(x)
+		target_repo = input("\nWhich repo would you like to download?:  ")
 		if target_repo in list_of_repos:
 			tags = find_tags(target_repo)
 			if tags is not None:
-				print "\n[+] Available Tags:\n"
+				print("\n[+] Available Tags:\n")
 				for x in tags:
-					print x
+					print(x)
 
-				target_tag = raw_input("\nWhich tag would you like to download?:  ")
+				target_tag = input("\nWhich tag would you like to download?:  ")
 				if target_tag in tags:
 					list_blobs(target_repo,target_tag)
 
-					dirname = raw_input("\nGive a directory name:  ")
+					dirname = input("\nGive a directory name:  ")
 					os.makedirs(dirname)
-					print "Now sit back and relax. I will download all the blobs for you in %s directory. \nOpen the directory, unzip all the files and explore like a Boss. " % dirname
+					print("Now sit back and relax. I will download all the blobs for you in %s directory. \nOpen the directory, unzip all the files and explore like a Boss. " % dirname)
 					for x in final_list_of_blobs:
-						print "\n[+] Downloading Blob: %s" % x
+						print("\n[+] Downloading Blob: %s" % x)
 						download_blobs(target_repo,x,dirname)
 				else:
-					print "No such Tag Available. Qutting...."
+					print("No such Tag Available. Qutting....")
 			else:
-				print "[+] No Tags Available. Quitting...."
+				print("[+] No Tags Available. Quitting....")
 		else:
-			print "No such repo found. Quitting...."
+			print("No such repo found. Quitting....")
 	else:
-		print "\n[-] Please use -u option to define API Endpoint, e.g. https://IP:Port\n"
+		print("\n[-] Please use -u option to define API Endpoint, e.g. https://IP:Port\n")
 
 
 if __name__ == "__main__":
